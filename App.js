@@ -14,6 +14,7 @@ import { AuthProvider } from './AuthContext';
 import { useAuth } from './AuthContext';
 import RoomDetails from './RoomDetails';
 import ChatScreen from './ChatScreen';
+import config from './config';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -48,7 +49,7 @@ const App = () => {
 
   const fetchGames = async () => {
     try {
-      const apiUrl = 'http://192.168.90.49:8000/games/';
+      const apiUrl = `http://${config.ip}:8000/games`;
 
       const response = await fetch(apiUrl, {
         headers: {

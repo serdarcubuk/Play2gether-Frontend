@@ -4,6 +4,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useRoute } from '@react-navigation/native';
 import { useAuth } from './AuthContext';
+import config from './config';
 
 const data = [
   { label: 'League Of Legends', value: '1' },
@@ -33,7 +34,7 @@ const AddProfileScreen = () => {
   };
 
   const handleAddProfile = async () => {
-    const apiUrl = 'http://192.168.90.49:8000/profiles/';
+    const apiUrl = `http://${config.ip}:8000/profiles/`;
 
     try {
       const token = accessToken; // Replace with your actual Bearer token

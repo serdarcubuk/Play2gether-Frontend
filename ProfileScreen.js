@@ -9,6 +9,7 @@ import {
   RefreshControl,
 } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import config from './config';
 
 const ProfileScreen = ({ navigation, route }) => {
   const [userData, setUserData] = useState(null);
@@ -22,7 +23,7 @@ const ProfileScreen = ({ navigation, route }) => {
 
   const fetchData = useCallback(() => {
     // Fetch user data
-    fetch(`http://192.168.90.49:8000/users/`, {
+    fetch(`http://${config.ip}:8000/users/`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -37,7 +38,7 @@ const ProfileScreen = ({ navigation, route }) => {
       });
 
     // Fetch profile data
-    fetch(`http://192.168.90.49:8000/profiles/?page=1&size=50&sort=id&order=asc`, {
+    fetch(`http://${config.ip}:8000/profiles/?page=1&size=50&sort=id&order=asc`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -74,7 +75,7 @@ const ProfileScreen = ({ navigation, route }) => {
 
   const handleDeleteProfile = (profileId) => {
     // API'ye DELETE isteği gönder
-    fetch(`http://192.168.90.49:8000/profiles/${profileId}/`, {
+    fetch(`http://${config.ip}:8000/profiles/${profileId}/`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,

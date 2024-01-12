@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet, ScrollView, SafeAreaView, StatusBar} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import LoginScreen from './LoginScreen';
+import config from './config';
 
 
 
@@ -18,7 +19,7 @@ const RegisterScreen = () => {
       // Burada API'ye gönderilecek olan verileri kullanarak bir fetch işlemi gerçekleştirilecek.
       // API endpoint ve diğer gerekli bilgileri kendi backend'inize göre düzenlemelisiniz.
   
-      const apiUrl = 'http://192.168.90.49:8000/users/';
+      const apiUrl = `http://${config.ip}:8000/users/`;
         
       try {
         const response = await fetch(apiUrl, {

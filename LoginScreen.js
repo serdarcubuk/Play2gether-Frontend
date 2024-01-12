@@ -3,6 +3,7 @@ import { View, Text, TextInput, Button, Alert, StyleSheet, TouchableOpacity, Ima
 import { useNavigation } from '@react-navigation/native';
 import ProfileScreen from './ProfileScreen';
 import { useAuth } from './AuthContext';
+import config from './config';
 
 const LoginScreen = () => {
     const [username, setUsername] = useState('');
@@ -12,7 +13,7 @@ const LoginScreen = () => {
   
     const handleLogin = async () => {
       try {
-        const response = await fetch('http://192.168.90.49:8000/auth/token', {
+        const response = await fetch(`http://${config.ip}:8000/auth/token`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

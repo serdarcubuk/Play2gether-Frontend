@@ -3,6 +3,7 @@ import { View, Text, StyleSheet,FlatList, TouchableOpacity, Alert, TextInput, Sc
 import { useAuth } from './AuthContext';
 import { useNavigation} from '@react-navigation/native';
 import ChatScreen from './ChatScreen';
+import config from './config';
 
 const RoomDetails = ({ route }) => {
     const { roomId } = route.params;
@@ -14,7 +15,7 @@ const RoomDetails = ({ route }) => {
   
     const fetchData = async () => {
       try {
-        const apiUrl = `http://192.168.90.49:8000/rooms/look/${roomId}`;
+        const apiUrl = `http://${config.ip}:8000/rooms/look/${roomId}`;
   
         const response = await fetch(apiUrl, {
           method: "GET",
@@ -41,7 +42,7 @@ const RoomDetails = ({ route }) => {
   
     const handleJoinRoom = async () => {
       try {
-        const joinApiUrl = `http://192.168.90.49:8000/rooms/join/${roomId}`;
+        const joinApiUrl = `http://${config.ip}:8000/rooms/join/${roomId}`;
   
         const joinResponse = await fetch(joinApiUrl, {
           method: 'POST',
@@ -70,7 +71,7 @@ const RoomDetails = ({ route }) => {
   
     const handleLeaveRoom = async () => {
       try {
-        const leaveApiUrl = `http://192.168.90.49:8000/rooms/`;
+        const leaveApiUrl = `http://${config.ip}:8000/rooms/`;
   
         const leaveResponse = await fetch(leaveApiUrl, {
           method: 'DELETE',

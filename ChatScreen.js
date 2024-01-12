@@ -11,6 +11,7 @@ import {
   Keyboard,
 } from 'react-native';
 import { useAuth } from './AuthContext';
+import config from './config';
 
 const ChatScreen = ({ route }) => {
   const { roomId, username } = route.params;
@@ -24,7 +25,7 @@ const ChatScreen = ({ route }) => {
   const { accessToken } = useAuth();
 
   useEffect(() => {
-    const websocket = new WebSocket(encodeURI(`ws://192.168.90.49:8000/chat/?Authorization=Bearer ${accessToken}`));
+    const websocket = new WebSocket(encodeURI(`ws://${config.ip}:8000/chat/?Authorization=Bearer ${accessToken}`));
     setWs(websocket);
 
     websocket.onopen = () => {

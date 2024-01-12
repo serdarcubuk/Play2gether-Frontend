@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { useAuth } from './AuthContext';
+import config from './config';
 
 const RoomsPage = ({ route }) => {
   const { gameId } = route.params;
@@ -26,7 +27,7 @@ const RoomsPage = ({ route }) => {
 
   // useCallback kullanarak fonksiyonu memoize edin
   const fetchData = useCallback(() => {
-    const apiUrl = `http://192.168.90.49:8000/rooms/list?page=1&size=50&sort=id&order=asc&game_id=${gameId}`;
+    const apiUrl = `http://${config.ip}:8000/rooms/list?page=1&size=50&sort=id&order=asc&game_id=${gameId}`;
 
     fetch(apiUrl, {
       headers: {
@@ -60,7 +61,7 @@ const RoomsPage = ({ route }) => {
 
   const handleCreateRoomPress = () => {
     // TODO: API'ye POST isteği gönder
-    const apiUrl = 'http://192.168.90.49:8000/rooms/';
+    const apiUrl = `http://${config.ip}:8000/rooms/`;
     const requestBody = {
       game_id: gameId,
       room_name: roomName,
