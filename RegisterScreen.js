@@ -98,7 +98,7 @@ const RegisterScreen = () => {
     
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={handleRegister}>
-              <Text style={styles.buttonText}>Kayıt Ol</Text>
+              <Text style={styles.buttonText}>Sign Up</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -158,9 +158,7 @@ const RegisterScreen = () => {
         backgroundColor: 'white',
         paddingHorizontal: 15,
         paddingVertical: 10,
-        borderRadius: 10,
-        marginTop: 5,
-        marginBottom: 10,
+        borderRadius: 5,
         borderWidth: 1,  // Çevre çizgisini ekledik
         borderColor: '#ccc',  // Çizgi rengini gri olarak belirledik
         backgroundColor: '#fff',

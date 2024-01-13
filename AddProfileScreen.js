@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, Alert } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import { useAuth } from './AuthContext';
 import config from './config';
 
@@ -20,13 +20,14 @@ const AddProfileScreen = () => {
   const [textInput2, setTextInput2] = useState('');
   const [profileList, setProfileList] = useState([]);
   const { accessToken } = useAuth();
+  const navigation = useNavigation();
   
 
   const renderLabel = () => {
     if (value || isFocus) {
       return (
         <Text style={[styles.label, isFocus && { color: 'blue' }]}>
-          Choose A Game
+          Select Game
         </Text>
       );
     }
@@ -37,7 +38,7 @@ const AddProfileScreen = () => {
     const apiUrl = `http://${config.ip}:8000/profiles/`;
 
     try {
-      const token = accessToken; // Replace with your actual Bearer token
+      const token = accessToken; 
 
       const response = await fetch(apiUrl, {
         method: 'POST',
@@ -54,6 +55,7 @@ const AddProfileScreen = () => {
 
       if (response.ok) {
         Alert.alert('Success', 'Profile added successfully!');
+        navigateToProfileScreen(token);
       } else {
         Alert.alert('Error', 'Failed to add profile. Please try again.');
       }
@@ -62,6 +64,11 @@ const AddProfileScreen = () => {
       console.log('Server response:', await error.response.json());
       Alert.alert('Error', 'An unexpected error occurred.');
     }
+  };
+
+  const navigateToProfileScreen = (token) => {
+    // Bu kısım, React Navigation kullanıyorsanız uygun navigasyon fonksiyonu olacaktır
+    navigation.navigate('Profile', { token });
   };
 
   return (
@@ -78,7 +85,7 @@ const AddProfileScreen = () => {
         maxHeight={300}
         labelField="label"
         valueField="value"
-        placeholder={!isFocus ? 'Select item' : '...'}
+        placeholder={!isFocus ? 'Select Game' : '...'}
         searchPlaceholder="Search..."
         value={value}
         onFocus={() => setIsFocus(true)}
@@ -96,12 +103,16 @@ const AddProfileScreen = () => {
           />
         )}
       />
+
+      <Text>Nickname:</Text>
       <TextInput
         style={styles.textInput}
         placeholder="Enter nickname"
         value={textInput1}
         onChangeText={setTextInput1}
       />
+
+      <Text>Rank:</Text>
       <TextInput
         style={styles.textInput}
         placeholder="Enter rank"
@@ -130,6 +141,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 8,
     marginTop: 16,
+    marginBottom: 16,
   },
   icon: {
     marginRight: 5,
@@ -160,10 +172,11 @@ const styles = StyleSheet.create({
   textInput: {
     height: 40,
     borderColor: 'gray',
-    borderWidth: 0.5,
+    borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 8,
     marginTop: 16,
+    marginBottom: 20, // Bu satır eklenerek TextInput'lar arasına boşluk eklendi
   },
 });
 

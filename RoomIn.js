@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet,FlatList, TouchableOpacity, Alert, TextInput, ScrollView, BackHandler } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert, BackHandler } from 'react-native';
 import { useAuth } from './AuthContext';
-import { useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import ChatScreen from './ChatScreen';
 import config from './config';
 
-const RoomDetails = ({ route }) => {
+const RoomIn = ({ route }) => {
   const { roomId } = route.params;
   const [roomDetails, setRoomDetails] = useState(null);
   const { accessToken, username } = useAuth();
-  const [showChatButton, setShowChatButton] = useState(false);
+  const [showChatButton, setShowChatButton] = useState(true); // "Chat" butonu her zaman görünecek
   const token = accessToken;
   const navigation = useNavigation();
-  const [joinButtonVisible, setJoinButtonVisible] = useState(true);
-  const [leaveButtonVisible, setLeaveButtonVisible] = useState(false);
 
   const fetchData = async () => {
     try {
-      const apiUrl = `http://${config.ip}:8000/rooms/look/${roomId}`;
+      const apiUrl = `http://${config.ip}:8000/rooms`;
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -27,18 +25,8 @@ const RoomDetails = ({ route }) => {
       });
 
       const apiData = await response.json();
-
-      if (response.ok) {
-        setRoomDetails(apiData);
-      } 
-      else if(response.status==404) {
-        Alert.alert('Room is Closed');
-        navigation.goBack();
-      }  
-      else {
-        const errorMessage = joinData.error || JSON.stringify(joinData);
-        Alert.alert('Error Joining Room', errorMessage);
-      }
+      console.log('Room Details API Data:', apiData);
+      setRoomDetails(apiData);
     } catch (error) {
       console.error('Error fetching room details:', error.message);
     }
@@ -46,40 +34,6 @@ const RoomDetails = ({ route }) => {
 
   const handleChatButtonPress = () => {
     navigation.navigate('ChatScreen', { roomId, username });
-  };
-
-  const handleJoinRoom = async () => {
-    try {
-      const joinApiUrl = `http://${config.ip}:8000/rooms/join/${roomId}`;
-
-      const joinResponse = await fetch(joinApiUrl, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-
-      const joinData = await joinResponse.json();
-
-      if (joinResponse.ok) {
-        Alert.alert('Joined Successfully!');
-        fetchData();
-        setShowChatButton(true);
-        setJoinButtonVisible(false);
-        setLeaveButtonVisible(true);
-        navigation.setOptions({
-          headerLeft: null,
-        });
-      } else {
-        const errorMessage = joinData.error || JSON.stringify(joinData);
-        Alert.alert('Error Joining Room', errorMessage);
-      }
-
-      console.log('Room Join API Response:', joinData);
-    } catch (error) {
-      console.error('Error joining room:', error.message);
-    }
   };
 
   const handleLeaveRoom = async () => {
@@ -134,7 +88,7 @@ const RoomDetails = ({ route }) => {
   useEffect(() => {
     const fetchDataInterval = setInterval(() => {
       fetchData();
-    }, 2000); // gerçi gösterdim galiba
+    }, 1000); // 1000 milliseconds (1 second)
   
     // Cleanup function to clear the interval when the component is unmounted
     return () => {
@@ -173,21 +127,12 @@ const RoomDetails = ({ route }) => {
           <Text style={styles.buttonText}>Chat</Text>
         </TouchableOpacity>
       )}
-
       <View style={styles.buttonContainer}>
-      {joinButtonVisible && (
-        <TouchableOpacity style={styles.joinButton} onPress={handleJoinRoom}>
-          <Text style={styles.buttonText}>Join Room</Text>
-        </TouchableOpacity>
-      )}
-
-      {leaveButtonVisible && (
         <TouchableOpacity style={styles.leaveButton} onPress={handleLeaveRoom}>
           <Text style={styles.buttonText}>Leave Room</Text>
         </TouchableOpacity>
-      )}
-      </View>
-    </View>
+        </View>
+        </View>
   );
 };
 
@@ -273,4 +218,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RoomDetails;
+export default RoomIn;

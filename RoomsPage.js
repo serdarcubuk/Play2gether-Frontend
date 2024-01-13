@@ -88,7 +88,7 @@ const RoomsPage = ({ route }) => {
           alert('Room created successfully');
           fetchData();
           const roomId = apiData.id; // API'nin döndüğü ID'yi alın
-          navigateToRoomDetails(roomId);
+          navigateToRoomIn(roomId);
         }
       })
       .catch(error => {
@@ -100,9 +100,9 @@ const RoomsPage = ({ route }) => {
     setModalVisible(false);
 };
 
-const navigateToRoomDetails = (roomId) => {
+const navigateToRoomIn = (roomId) => {
   // Bu kısım, React Navigation kullanıyorsanız uygun navigasyon fonksiyonu olacaktır
-  navigation.navigate('RoomDetails', { roomId });
+  navigation.navigate('RoomIn', { roomId });
 };
 
   const renderItem = ({ item }) => (

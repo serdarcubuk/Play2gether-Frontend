@@ -49,31 +49,31 @@ const LoginScreen = () => {
         style={styles.imageType}
       />
     <View style={styles.inputContainer}>
-      <Text>Kullanıcı Adı</Text>
+      <Text>Username:</Text>
       <TextInput
         style={styles.input}
         value={username}
         onChangeText={(text) => setUsername(text)}
-        placeholder="Username"
+        placeholder="Enter your username"
       />
 
-      <Text>Şifre</Text>
+      <Text>Password:</Text>
       <TextInput
         style={styles.input}
         value={password}
         onChangeText={(text) => setPassword(text)}
         secureTextEntry
-        placeholder="Password"
+        placeholder="Enter your password"
       />
     </View>
 
     <View style={styles.buttonContainer}>
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Giriş Yap</Text>
+        <Text style={styles.buttonText}>LOGIN</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.buttonOutline} onPress={handleRegister}>
-        <Text style={styles.buttonOutlineText}>Kayıt Ol</Text>
+        <Text style={styles.buttonOutlineText}>REGISTER</Text>
       </TouchableOpacity>
     </View>
   </View>

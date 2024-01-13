@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { AuthProvider } from './AuthContext';
 import { useAuth } from './AuthContext';
 import RoomDetails from './RoomDetails';
+import RoomIn from './RoomIn';
 import ChatScreen from './ChatScreen';
 import config from './config';
 
@@ -23,15 +24,17 @@ const GamesStack = ({ games }) => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="  "
+        name="GAMES"
         options={{
-          
+          headerTitleAlign: 'center',
+          fontWeight: 'bold',
         }}
       >
         {() => <GamesScreen games={games} />}
       </Stack.Screen>
       <Stack.Screen name="RoomsPage" component={RoomsPage} options={{ title: 'Rooms' }} />
       <Stack.Screen name="RoomDetails" component={RoomDetails} options={{ title: 'RoomDetails' }} />
+      <Stack.Screen name="RoomIn" component={RoomIn} options={{ title: 'RoomIn' }} />
       <Stack.Screen name="ChatScreen" component={ChatScreen} options={{ title: 'Chat' }} />
     </Stack.Navigator>
   );
@@ -97,14 +100,16 @@ const App = () => {
           component={LoginScreen}
           options={{
             tabBarButton: () => null,
-            tabBarStyle: { display: "none" }
+            tabBarStyle: { display: "none" },
+            title: '  ',
           }} />
           <Tab.Screen
           name="Register"
           component={RegisterScreen}
           options={{
             tabBarButton: () => null,
-            tabBarStyle: { display: "none" }
+            tabBarStyle: { display: "none" },
+            title: 'Register',
           }} />
         <Tab.Screen
           name="Profile"
@@ -133,7 +138,7 @@ const App = () => {
             ),
             headerTitle: () => (
               <Text style={{ fontSize: 30, fontWeight: 'bold', color: '#000000' }}>
-                Games
+                Play2gether
               </Text>
             ),
             headerTitleAlign: 'center',

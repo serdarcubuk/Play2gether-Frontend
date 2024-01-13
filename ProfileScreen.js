@@ -96,6 +96,7 @@ const ProfileScreen = ({ navigation, route }) => {
         console.error("Error deleting profile:", error);
       });
   };
+  
 
   return (
     <ScrollView
